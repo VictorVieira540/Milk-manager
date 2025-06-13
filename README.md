@@ -1,52 +1,55 @@
-# MilkControl - Aplicativo de Gestão de Produção Leiteira 🥛
+# Milk Manager
 
-Este é um aplicativo móvel desenvolvido com [Expo](https://expo.dev) e React Native para ajudar produtores e gestores a controlar a produção de leite.
+A mobile app developed with React Native and Expo for milk production management.
 
-## Funcionalidades
+## About
 
-- Cadastro e gerenciamento de produtores
-- Registro de coletas de leite
-- Controle de preços e quantidades
-- Identificação de problemas na qualidade do leite
-- Relatórios e estatísticas
-- Exportação de dados
-- Backup e restauração
+Personal project developed to practice and demonstrate mobile development skills. The goal is to create a simple and efficient solution for milk production control.
 
-## Como iniciar
+## Features
 
-1. Instale as dependências
+- Producer registration
+- Collection records
+- Basic reports
+- Data export
+- Local backup
 
-   ```bash
-   npm install
-   ```
-
-2. Inicie o aplicativo
-
-   ```bash
-   npx expo start
-   ```
-
-## Opções para executar o aplicativo
-
-Após iniciar, você pode abrir o aplicativo em:
-
-- [Emulador Android](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [Simulador iOS](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go) no seu dispositivo físico (escaneando o QR code)
-- [Build de desenvolvimento](https://docs.expo.dev/develop/development-builds/introduction/)
-
-## Estrutura do projeto
-
-- **/app**: Telas principais e rotas da aplicação
-- **/src/models**: Modelos de dados (Produtores, Coletas)
-- **/src/services**: Serviços de backend (Dados, Exportação, Notificações)
-- **/src/context**: Contextos para gerenciamento de estado
-- **/components**: Componentes reutilizáveis
-
-## Desenvolvido com
+## Technologies
 
 - React Native
 - Expo
 - TypeScript
 - React Native Paper
 - AsyncStorage
+
+## How to Use
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/VictorVieira540/Milk-manager.git
+   ```
+
+2. Install dependencies
+   ```bash
+   npm install
+   ```
+
+3. Run the project
+   ```bash
+   npx expo start
+   ```
+
+## Structure
+
+- **/app**: Screens and navigation
+- **/src**: App logic
+- **/components**: Components
+- **/assets**: Images and resources
+
+## Author
+
+Victor Vieira
+
+## License
+
+MIT
