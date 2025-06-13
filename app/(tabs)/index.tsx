@@ -1,74 +1,154 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import React, { useState } from "react";
+import { View, StyleSheet, ScrollView, Image, Alert } from "react-native";
+import {
+  Card,
+  Title,
+  Paragraph,
+  Button,
+  Text,
+  Appbar,
+  Menu,
+} from "react-native-paper";
+import { router } from "expo-router";
+import { useApp } from "@/src/context/AppContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
+  const { producers, loading } = useApp();
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const activeProducers = producers.filter((p) => p.active);
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+    <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
+      <Appbar.Header style={styles.header}>
+        <Appbar.Content
+          title="Controle de Produtor"
+          subtitle="Gerenciamento de Coleta de Leite"
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <Menu
+          visible={menuVisible}
+          onDismiss={() => setMenuVisible(false)}
+          anchor={
+            <Appbar.Action
+              icon="cog"
+              onPress={() => setMenuVisible(true)}
+            />
+          }
+          contentStyle={styles.menuContent}
+          anchorPosition="bottom"
+        >
+          <Menu.Item
+            onPress={() => {
+              setMenuVisible(false);
+              router.push('/settings');
+            }}
+            title="Configurações"
+            leadingIcon="cog-outline"
+            titleStyle={styles.menuItemTitle}
+          />
+          <Menu.Item
+            onPress={() => {
+              setMenuVisible(false);
+              Alert.alert('Sobre', 'MilkControl v1.0\n© 2025 - Todos os direitos reservados');
+            }}
+            title="Sobre"
+            leadingIcon="information-outline"
+            titleStyle={styles.menuItemTitle}
+          />
+        </Menu>
+      </Appbar.Header>
+
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
+        <Title style={styles.sectionTitle}>Acesso Rápido</Title>
+
+        <Card
+          style={styles.actionCard}
+          onPress={() => router.push("/producer-form")}
+        >
+          <Card.Content>
+            <Title>Cadastrar Produtor</Title>
+            <Paragraph>Adicione um novo produtor ao sistema</Paragraph>
+          </Card.Content>
+          <Card.Actions>
+            <Button>Cadastrar</Button>
+          </Card.Actions>
+        </Card>
+
+        <Card
+          style={styles.actionCard}
+          onPress={() => router.push("/collection-form")}
+        >
+          <Card.Content>
+            <Title>Nova Coleta</Title>
+            <Paragraph>Registre uma nova coleta de leite</Paragraph>
+          </Card.Content>
+          <Card.Actions>
+            <Button>Registrar</Button>
+          </Card.Actions>
+        </Card>
+
+        <Card style={styles.actionCard} onPress={() => router.push("/reports")}>
+          <Card.Content>
+            <Title>Relatórios</Title>
+            <Paragraph>Exporte seus dados para Excel</Paragraph>
+          </Card.Content>
+          <Card.Actions>
+            <Button>Acessar</Button>
+          </Card.Actions>
+        </Card>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  header: {
+    elevation: 4,
+    marginTop: 0, // Removido padding extra
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  menuContent: {
+    minWidth: 200,  // Garante largura mínima
+    marginTop: 40,  // Posiciona o menu abaixo da barra de navegação
+  },
+  menuItemTitle: {
+    fontSize: 16,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    padding: 16,
+    paddingBottom: 32,
+  },
+  welcomeCard: {
+    marginBottom: 24,
+  },
+  coverImage: {
+    height: 120,
+    resizeMode: "contain",
+    backgroundColor: "transparent",
+  },
+  sectionTitle: {
+    marginTop: 8,
+    marginBottom: 16,
+  },
+  statsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
+  statsCard: {
+    flex: 1,
+    marginHorizontal: 4,
+  },
+  actionCard: {
+    marginBottom: 16,
   },
 });

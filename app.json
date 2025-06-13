@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MilkControl",
-    "slug": "MilkControl",
+    "name": "Controle de Produtor",
+    "slug": "controle-de-produtor",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,13 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.controledeprodutor"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.yourcompany.controledeprodutor"
     },
     "web": {
       "bundler": "metro",
